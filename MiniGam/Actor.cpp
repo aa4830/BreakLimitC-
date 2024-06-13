@@ -1,6 +1,7 @@
 
 #include "Actor.h"
-
+#include <windows.h>
+#include "Engine.h"
 AActor::AActor()
 {
 	X = 0;
@@ -28,4 +29,8 @@ void AActor::Tick()
 
 void AActor::Render()
 {
+	COORD Cur;
+	Cur.X = X;
+	Cur.Y = Y;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Cur);
 }

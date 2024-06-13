@@ -1,10 +1,10 @@
 #include "Player.h"
 #include <conio.h>
+#include "Engine.h"
 APlayer::APlayer()
 {
 	X = 0;
 	Y = 0;
-	Key = ' ';
 	Shape = 'P';
 	Collision = false;
 }
@@ -15,7 +15,6 @@ APlayer::APlayer(int NewX, int NewY, char NewShape)
 	Y = NewY;
 	Shape = NewShape;
 	Collision = false;
-	Key = ' ';
 }
 
 APlayer::~APlayer()
@@ -24,19 +23,19 @@ APlayer::~APlayer()
 
 void APlayer::Tick()
 {
-	if (Key == 'w')
+	if (AEngine::GetInstance()->Key == 'w')
 	{
 		Y--;
 	}
-	if (Key == 's')
+	if (AEngine::GetInstance()->Key == 's')
 	{
 		Y++;
 	}
-	if (Key == 'a')
+	if (AEngine::GetInstance()->Key == 'a')
 	{
 		X--;
 	}
-	if (Key == 'd')
+	if (AEngine::GetInstance()->Key == 'd')
 	{
 		X++;
 	}
@@ -48,5 +47,4 @@ void APlayer::Render()
 
 void APlayer::Input()
 {
-	Key = _getch();
 }

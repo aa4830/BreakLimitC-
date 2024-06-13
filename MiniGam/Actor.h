@@ -1,8 +1,7 @@
 #pragma once
-#include <iostream>
 #include "Engine.h"
 #include "Player.h"
-class AActor : public AEngine
+class AActor
 {
 public: 
 	AActor();

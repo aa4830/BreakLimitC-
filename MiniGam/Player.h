@@ -1,15 +1,16 @@
 #pragma once
 #include "Actor.h"
+#include "Engine.h"
+
 class APlayer : public AActor
 {
 public:
 	APlayer();
 	APlayer(int NewX, int NewY, char NewShape);
 	virtual ~APlayer();
-	virtual void Tick();
-	virtual void Render();
-	virtual void Input();
-	char Key;
+	void Tick();
+	void Render();
+	void Input();
 
 private:
 	int X;

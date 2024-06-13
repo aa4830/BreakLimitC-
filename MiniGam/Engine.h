@@ -8,22 +8,29 @@ class AEngine
 {
 public: 
 	virtual ~AEngine();
+	static AEngine* GetInstance()
+	{
+		if (!Instance)
+		{
+			Instance = new AEngine();
+
+			return Instance;
+		}
+
+		return Instance;
+	}
+	static AEngine* Instance;
 	bool IsRunning;
-	
+	char Key;
 	void Tick();
 	void Render();
 	void Input();
 	void Run();
 	void DrawMap(std::string MapFileName);
-
-	std::vector<AActor*>Actors;
-
-	vector<int*> X;
-
 	void SpawnActor(AActor* NewActor);
 
-	static AEngine* instance;
-	static AEngine* Getinstance();
+	vector<AActor*>Actors;
+
 
 protected:
 	AEngine();

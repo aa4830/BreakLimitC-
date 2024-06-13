@@ -7,17 +7,25 @@
 #include "Wall.h"
 #include "Floor.h"
 #include "Goal.h"
+#include <conio.h>
 using namespace std;
+#include <iostream>
+
+AEngine* AEngine::Instance = nullptr;
+
 AEngine::AEngine()
 {
 	IsRunning = true;
-	instance = nullptr;
+	Key = ' ';
 }
 
 AEngine::~AEngine()
 {
 }
-
+void AEngine::SpawnActor(AActor* NewActor)
+{
+	Actors.push_back(NewActor);
+}
 void AEngine::Tick()
 {
 	for (int i = 0; i < Actors.size(); ++i)
@@ -36,36 +44,35 @@ void AEngine::Render()
 
 void AEngine::Input()
 {
-	
+	Key = _getch();
 }
-
 void AEngine::Run()
 {
 	while (IsRunning)
 	{
+		Input();
 		Tick();
 		Render();
-		Input();
 	}
 }
 
 void AEngine::DrawMap(std::string MapFileName)
 {
-	int Y = 0;
 	char Map[256];
 	ifstream InputFile;
 	InputFile.open(MapFileName);
-	while (InputFile.getline(Map, 100))
+	int Y = 0;
+	while (InputFile.getline(Map, 80))
 	{
 		for (int X = 0; X < strlen(Map); ++X)
 		{
 			if (Map[X] == 'P')
 			{
-				SpawnActor(new APlayer (X, Y,'P'));
+				SpawnActor(new APlayer(X, Y));
 			}
 			else if(Map[X] == '*')
 			{
-				SpawnActor(new AWall(X, Y, '*'));
+				SpawnActor(new AWall(X, Y,'*'));
 			}
 			else if (Map[X] == ' ')
 			{
@@ -82,20 +89,5 @@ void AEngine::DrawMap(std::string MapFileName)
 		}
 		++Y;
 	}
-}
-
-
-void AEngine::SpawnActor(AActor* newActor)
-{
-	Actors.push_back(newActor);
-}
-
-AEngine* AEngine::Getinstance()
-{
-	if (!instance)
-	{
-		instance = new AEngine();
-		return instance;
-	}
-	return instance;
+	InputFile.close();
 }
