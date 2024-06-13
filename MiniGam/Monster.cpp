@@ -6,6 +6,7 @@ AMonster::AMonster()
 	Y = 0;
 	Shape = 'M';
 	Collision = false;
+	Layer = 1;
 }
 
 AMonster::AMonster(int NewX, int NewY, char NewShape)
@@ -14,6 +15,7 @@ AMonster::AMonster(int NewX, int NewY, char NewShape)
 	Y = NewY;
 	Shape = NewShape;
 	Collision = false;
+	Layer = 1;
 }
 
 AMonster::~AMonster()

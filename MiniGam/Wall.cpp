@@ -6,6 +6,7 @@ AWall::AWall()
 	Y = 0;
 	Shape = '*';
 	Collision = false;
+	Layer = 1;
 }
 
 AWall::AWall(int NewX, int NewY, char NewShape)
@@ -14,6 +15,7 @@ AWall::AWall(int NewX, int NewY, char NewShape)
 	Y = NewY;
 	Shape = NewShape;
 	Collision = false;
+	Layer = 1;
 }
 
 AWall::~AWall()

@@ -6,6 +6,7 @@ AFloor::AFloor()
 	Y = 0;
 	Shape = ' ';
 	Collision = false;
+	Layer = 0;
 }
 
 AFloor::AFloor(int NewX, int NewY, char NewShape)
@@ -14,6 +15,7 @@ AFloor::AFloor(int NewX, int NewY, char NewShape)
 	Y = NewY;
 	Shape = NewShape;
 	Collision = false;
+	Layer = 0;
 }
 
 AFloor::~AFloor()

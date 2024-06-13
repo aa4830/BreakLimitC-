@@ -8,14 +8,16 @@ AActor::AActor()
 	Y = 0;
 	Shape = ' ';
 	Collision = false;
+	Layer = 0;
 }
 
-AActor::AActor(int NewX, int NewY, char NewShape)
+AActor::AActor(int NewX, int NewY,char NewShape, int NewLayer)
 {
 	X = NewX;
 	Y = NewY;
 	Shape = NewShape;
 	Collision = false;
+	Layer = NewLayer;
 }
 
 AActor::~AActor()
@@ -33,4 +35,5 @@ void AActor::Render()
 	Cur.X = X;
 	Cur.Y = Y;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Cur);
+	std::cout << Shape;
 }

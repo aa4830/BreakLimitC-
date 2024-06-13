@@ -6,6 +6,7 @@ AGoal::AGoal()
 	Y = 0;
 	Shape = 'G';
 	Collision = false;
+	Layer = 4;
 }
 
 AGoal::AGoal(int NewX, int NewY, char NewShape)
@@ -14,6 +15,7 @@ AGoal::AGoal(int NewX, int NewY, char NewShape)
 	Y = NewY;
 	Shape = NewShape;
 	Collision = false;
+	Layer = 4;
 }
 
 AGoal::~AGoal()

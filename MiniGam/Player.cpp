@@ -7,14 +7,16 @@ APlayer::APlayer()
 	Y = 0;
 	Shape = 'P';
 	Collision = false;
+	Layer = 5;
 }
 
-APlayer::APlayer(int NewX, int NewY, char NewShape)
+APlayer::APlayer(int NewX, int NewY,char NewShape)
 {
 	X = NewX;
 	Y = NewY;
 	Shape = NewShape;
 	Collision = false;
+	Layer = 5;
 }
 
 APlayer::~APlayer()
@@ -39,10 +41,6 @@ void APlayer::Tick()
 	{
 		X++;
 	}
-}
-
-void APlayer::Render()
-{
 }
 
 void APlayer::Input()

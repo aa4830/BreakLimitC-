@@ -4,8 +4,9 @@ class AActor
 {
 public: 
 	AActor();
-	AActor(int NewX, int NewY, char NewShape);
+	AActor(int NewX, int NewY,char NewShape, int NewLayer);
 	virtual ~AActor();
+	int Layer;
 
 	virtual void Tick();
 	virtual void Render();

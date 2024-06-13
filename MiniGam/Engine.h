@@ -28,6 +28,7 @@ public:
 	void Run();
 	void DrawMap(std::string MapFileName);
 	void SpawnActor(AActor* NewActor);
+	void SortLayer();
 
 	vector<AActor*>Actors;
 

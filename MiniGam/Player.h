@@ -6,10 +6,9 @@ class APlayer : public AActor
 {
 public:
 	APlayer();
-	APlayer(int NewX, int NewY, char NewShape);
+	APlayer(int NewX, int NewY,char NewShape = 'P');
 	virtual ~APlayer();
-	void Tick();
-	void Render();
+	virtual void Tick() override;
 	void Input();
 };
 
