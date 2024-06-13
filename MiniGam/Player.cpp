@@ -6,7 +6,7 @@ APlayer::APlayer()
 	X = 0;
 	Y = 0;
 	Shape = 'P';
-	Collision = false;
+	Collision = true;
 	Layer = 5;
 }
 
@@ -15,7 +15,7 @@ APlayer::APlayer(int NewX, int NewY,char NewShape)
 	X = NewX;
 	Y = NewY;
 	Shape = NewShape;
-	Collision = false;
+	Collision = true;
 	Layer = 5;
 }
 
@@ -25,23 +25,58 @@ APlayer::~APlayer()
 
 void APlayer::Tick()
 {
-	if (AEngine::GetInstance()->Key == 'w')
+	if (PredictForward(X, Y - 1)) 
 	{
-		Y--;
+		if (AEngine::GetInstance()->Key == 'w')
+		{
+			Y--;
+		}
 	}
-	if (AEngine::GetInstance()->Key == 's')
+	if (PredictForward(X, Y + 1))
 	{
-		Y++;
+		if (AEngine::GetInstance()->Key == 's')
+		{
+			Y++;
+		}
 	}
-	if (AEngine::GetInstance()->Key == 'a')
+	if (PredictForward(X-1, Y))
 	{
-		X--;
+		if (AEngine::GetInstance()->Key == 'a')
+		{
+			X--;
+		}
 	}
-	if (AEngine::GetInstance()->Key == 'd')
+	if (PredictForward(X+1, Y))
 	{
-		X++;
+		if (AEngine::GetInstance()->Key == 'd')
+		{
+			X++;
+		}
 	}
 }
+
+bool APlayer::PredictForward(int NewX, int NewY)
+{
+	for (int i = 0; i < AEngine::GetInstance()->Actors.size(); ++i)
+	{
+		if (this == AEngine::GetInstance()->Actors[i])
+		{
+			continue;
+		}
+
+		if (AEngine::GetInstance()->Actors[i]->GetCollision() == false)
+		{
+			continue;
+		}
+
+		if (AEngine::GetInstance()->Actors[i]->GetX() == NewX && AEngine::GetInstance()->Actors[i]->GetY() == NewY)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 
 void APlayer::Input()
 {
