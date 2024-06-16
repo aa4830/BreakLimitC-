@@ -5,27 +5,35 @@
 #include "Floor.h"
 #include "Goal.h"
 #include "Player.h"
+#include "Heart.h"
 #include <vector>
 #include <fstream>
 #include <conio.h>
-using namespace std;
 #include <iostream>
+#include "SDL.h"
+#include <SDL_mixer.h>
+using namespace std;
 
 AEngine* AEngine::Instance = nullptr;
+int AEngine::KeyCode = 0;
 
 AEngine::AEngine()
 {
-	IsRunning = true;
-	Key = ' ';
+	DeltaSeconds = 0;
+	LastTime = 0;
+	Init();
 }
 
 AEngine::~AEngine()
 {
+	Term();
 }
+
 void AEngine::SpawnActor(AActor* NewActor)
 {
 	Actors.push_back(NewActor);
 }
+
 void AEngine::SortLayer()
 {	
 	AActor* Temp;
@@ -45,8 +53,55 @@ void AEngine::SortLayer()
 
 }
 
+void AEngine::Init()
+{
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+	{
+		cout << "Init error" << endl;
+		return;
+	}
+	MyWindow = SDL_CreateWindow(" I am Window ", 100, 100, 660, 600, SDL_WINDOW_OPENGL);
+	MyRenderer = SDL_CreateRenderer(MyWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
+	srand((unsigned int)(time(0)));
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+	Mix_Music* bgm = Mix_LoadMUS("data/bgm.mp3");
+	Mix_VolumeMusic(1);
+	Mix_PlayMusic(bgm, -1);
+	IsRunning = true;
+}
+
+void AEngine::Term()
+{
+	for (int i = 0; i < Actors.size(); ++i)
+	{
+		delete Actors[i];
+	}
+	Actors.clear();
+	SDL_DestroyRenderer(MyRenderer);
+	SDL_DestroyWindow(MyWindow);
+	Mix_CloseAudio();
+	SDL_Quit();
+}
+
 void AEngine::Tick()
 {
+	switch (MyEvent.type)
+	{
+	case SDL_QUIT:
+		IsRunning = false;
+		break;
+	case SDL_MOUSEBUTTONDOWN:
+		cout << "Mouse Button Down" << endl;
+		break;
+	case SDL_KEYDOWN:
+		switch (MyEvent.key.keysym.sym)
+		{
+		case SDLK_ESCAPE:
+			IsRunning = false;
+			break;
+		}
+	}
+
 	for (int i = 0; i < Actors.size(); ++i)
 	{
 		Actors[i]->Tick();
@@ -55,15 +110,18 @@ void AEngine::Tick()
 
 void AEngine::Render()
 {
+	SDL_SetRenderDrawColor(MyRenderer, 0, 0, 0, 0);
+	SDL_RenderClear(MyRenderer);
 	for (int i = 0; i < Actors.size(); ++i)
 	{
 		Actors[i]->Render();
 	}
+	SDL_RenderPresent(MyRenderer);
 }
 
 void AEngine::Input()
 {
-	Key = _getch();
+	SDL_PollEvent(&MyEvent);
 }
 
 void AEngine::Run()
@@ -71,6 +129,8 @@ void AEngine::Run()
 	while (IsRunning)
 	{
 		Input();
+		DeltaSeconds = SDL_GetTicks64() - LastTime;
+		LastTime = SDL_GetTicks64();
 		Tick();
 		Render();
 	}
@@ -79,10 +139,13 @@ void AEngine::Run()
 void AEngine::DrawMap(std::string MapFileName)
 {
 	char Map[256];
+
 	ifstream InputFile;
+
 	InputFile.open(MapFileName);
+
 	int Y = 0;
-	while (InputFile.getline(Map, 80))
+	while (InputFile.getline(Map, 300))
 	{
 		for (int X = 0; X < strlen(Map); ++X)
 		{

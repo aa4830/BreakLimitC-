@@ -8,5 +8,6 @@ public:
 	bool PredictForward(int NewX, int NewY);
 	virtual ~AMonster();
 	virtual void Tick() override;
+	Uint64 ElapsedTime;
 };
 

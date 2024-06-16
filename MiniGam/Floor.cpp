@@ -7,6 +7,9 @@ AFloor::AFloor()
 	Shape = ' ';
 	Collision = false;
 	Layer = 0;
+	R = 100;
+	G = 100;
+	B = 100;
 }
 
 AFloor::AFloor(int NewX, int NewY, char NewShape)
@@ -16,6 +19,12 @@ AFloor::AFloor(int NewX, int NewY, char NewShape)
 	Shape = NewShape;
 	Collision = false;
 	Layer = 0;
+
+	R = 100;
+	G = 100;
+	B = 100;
+	Filename = "Data/floor.bmp";
+	LoadTexture(Filename);
 }
 
 AFloor::~AFloor()

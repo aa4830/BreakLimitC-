@@ -7,6 +7,10 @@ AWall::AWall()
 	Shape = '*';
 	Collision = true;
 	Layer = 1;
+
+	R = 255;
+	G = 0;
+	B = 0;
 }
 
 AWall::AWall(int NewX, int NewY, char NewShape)
@@ -16,6 +20,12 @@ AWall::AWall(int NewX, int NewY, char NewShape)
 	Shape = NewShape;
 	Collision = true;
 	Layer = 1;
+
+	R = 255;
+	G = 0;
+	B = 0;
+	Filename = "Data/wall.bmp";
+	LoadTexture(Filename);
 }
 
 AWall::~AWall()

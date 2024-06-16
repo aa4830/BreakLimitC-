@@ -1,5 +1,4 @@
 #include "Monster.h"
-#include <time.h>
 #include "Player.h"
 #include "Engine.h"
 AMonster::AMonster()
@@ -9,6 +8,10 @@ AMonster::AMonster()
 	Shape = 'M';
 	Collision = false;
 	Layer = 1;
+	R = 255;
+	G = 0;
+	B = 255;
+	ElapsedTime = 0;
 }
 
 AMonster::AMonster(int NewX, int NewY, char NewShape)
@@ -18,6 +21,13 @@ AMonster::AMonster(int NewX, int NewY, char NewShape)
 	Shape = NewShape;
 	Collision = false;
 	Layer = 1;
+	R = 255;
+	G = 0;
+	B = 255;
+
+	ElapsedTime = 0;
+	Filename = "Data/Slime.bmp";
+	LoadTexture(Filename);
 }
 
 AMonster::~AMonster()
@@ -48,32 +58,42 @@ bool AMonster::PredictForward(int NewX, int NewY)
 
 void AMonster::Tick()
 {
-	if (rand() % 4 == 0)
+	ElapsedTime += AEngine::GetInstance()->GetWorldDeltaSeconds();
+
+	if (ElapsedTime < 500)
 	{
+		return;
+	}
+
+	ElapsedTime = 0;
+
+	int Direction = rand() % 4;
+
+	switch (Direction)
+	{
+	case 0:
 		if (PredictForward(X, Y - 1))
 		{
 			Y--;
 		}
-	}
-	if (rand() % 4 == 1)
-	{
+		break;
+	case 1:
 		if (PredictForward(X, Y + 1))
 		{
 			Y++;
 		}
-	}
-	if (rand() % 4 == 2)
-	{
-		if (PredictForward(X-1, Y))
+		break;
+	case 2:
+		if (PredictForward(X - 1, Y))
 		{
 			X--;
 		}
-	}
-	if (rand() % 4 == 3)
-	{
-		if (PredictForward(X+1,Y))
+		break;
+	case 3:
+		if (PredictForward(X + 1, Y))
 		{
 			X++;
 		}
+		break;
 	}
 }

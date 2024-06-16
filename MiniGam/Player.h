@@ -1,15 +1,20 @@
 #pragma once
 #include "Actor.h"
-#include "Engine.h"
 
 class APlayer : public AActor
 {
 public:
 	APlayer();
-	APlayer(int NewX, int NewY,char NewShape = 'P');
+	APlayer(int NewX, int NewY,char NewShape);
 	virtual ~APlayer();
+
 	virtual void Tick() override;
+	virtual void Render() override;
 	bool PredictForward(int NewX, int NewY);
-	void Input();
+
+	int SpirteIndexX;
+	int SpirteIndexY;
+	Uint64 ElapsedTime;
+
 };
 

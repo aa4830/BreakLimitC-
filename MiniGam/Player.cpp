@@ -8,6 +8,16 @@ APlayer::APlayer()
 	Shape = 'P';
 	Collision = true;
 	Layer = 5;
+	R = 0;
+	G = 255;
+	B = 0;
+
+	ColorKeyR = 255;
+	ColorKeyG = 0;
+	ColorKeyB = 255;
+	SpirteIndexX = 0;
+	SpirteIndexY = 0;
+	ElapsedTime = 0;
 }
 
 APlayer::APlayer(int NewX, int NewY,char NewShape)
@@ -17,6 +27,21 @@ APlayer::APlayer(int NewX, int NewY,char NewShape)
 	Shape = NewShape;
 	Collision = true;
 	Layer = 5;
+
+	R = 0;
+	G = 255;
+	B = 0;
+
+	ColorKeyR = 255;
+	ColorKeyG = 0;
+	ColorKeyB = 255;
+
+	SpirteIndexX = 0;
+	SpirteIndexY = 0;
+
+	Filename = "Data/test.bmp";
+	LoadTexture(Filename);
+	ElapsedTime = 0;
 }
 
 APlayer::~APlayer()
@@ -25,33 +50,81 @@ APlayer::~APlayer()
 
 void APlayer::Tick()
 {
-	if (PredictForward(X, Y - 1)) 
+	switch (AEngine::GetInstance()->MyEvent.type)
 	{
-		if (AEngine::GetInstance()->Key == 'w')
+	case SDL_KEYDOWN:
+		switch (AEngine::GetInstance()->MyEvent.key.keysym.sym)
 		{
-			Y--;
+		case SDLK_w:
+		case SDLK_UP:
+			SpirteIndexY = 2;
+			if (PredictForward(X, Y - 1))
+			{
+				Y--;
+			}
+			break;
+		case SDLK_s:
+		case SDLK_DOWN:
+			SpirteIndexY = 3;
+			if (PredictForward(X, Y + 1))
+			{
+				Y++;
+			}
+			break;
+		case SDLK_a:
+		case SDLK_LEFT:
+			SpirteIndexY = 0;
+			if (PredictForward(X - 1, Y))
+			{
+				X--;
+			}
+			break;
+		case SDLK_d:
+		case SDLK_RIGHT:
+			SpirteIndexY = 1;
+			if (PredictForward(X + 1, Y))
+			{
+				X++;
+			}
+			break;
 		}
 	}
-	if (PredictForward(X, Y + 1))
+}
+
+void APlayer::Render()
+{
+	SDL_Rect MyRect;
+	MyRect.x = X * SpriteSize;
+	MyRect.y = Y * SpriteSize;
+	MyRect.w = SpriteSize;
+	MyRect.h = SpriteSize;
+
+	int SpriteSizeX = MySurface->w / 5;
+	int SpriteSizeY = MySurface->h / 5;
+	SDL_Rect SrcRect;
+
+	SrcRect.x = SpriteSizeX * SpirteIndexX;
+	SrcRect.y = SpriteSizeY * SpirteIndexY;
+	SrcRect.w = SpriteSizeX;
+	SrcRect.h = SpriteSizeY;
+	ElapsedTime += AEngine::GetInstance()->GetWorldDeltaSeconds();
+	if (ElapsedTime >= 200)
 	{
-		if (AEngine::GetInstance()->Key == 's')
-		{
-			Y++;
-		}
+		SpirteIndexX++;
+		SpirteIndexX = SpirteIndexX % 5;
+		ElapsedTime = 0;
 	}
-	if (PredictForward(X-1, Y))
+
+	if (MyTexture)
 	{
-		if (AEngine::GetInstance()->Key == 'a')
-		{
-			X--;
-		}
+		SDL_RenderCopy(AEngine::GetInstance()->MyRenderer,
+			MyTexture,
+			&SrcRect,
+			&MyRect);
 	}
-	if (PredictForward(X+1, Y))
+	else
 	{
-		if (AEngine::GetInstance()->Key == 'd')
-		{
-			X++;
-		}
+		SDL_RenderFillRect(AEngine::GetInstance()->MyRenderer, &MyRect);
 	}
 }
 
@@ -75,9 +148,4 @@ bool APlayer::PredictForward(int NewX, int NewY)
 		}
 	}
 	return true;
-}
-
-
-void APlayer::Input()
-{
 }
