@@ -3,8 +3,12 @@
 #include <vector>
 #include "SDL.h"
 #include <string>
+#include "SDL_mixer.h"
+#include "SDL_ttf.h"
 #pragma comment(lib, "SDL2")
 #pragma comment(lib, "SDL2main")
+#pragma comment(lib, "SDL2_mixer")
+#pragma comment(lib, "SDL2_ttf")
 using namespace std;
 class AActor;
 

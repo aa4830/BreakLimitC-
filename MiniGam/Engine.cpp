@@ -5,13 +5,15 @@
 #include "Floor.h"
 #include "Goal.h"
 #include "Player.h"
-#include "Heart.h"
 #include <vector>
 #include <fstream>
 #include <conio.h>
 #include <iostream>
 #include "SDL.h"
 #include <SDL_mixer.h>
+#include "SDL_ttf.h"
+#include "Heart.h"
+#include "Text.h"
 using namespace std;
 
 AEngine* AEngine::Instance = nullptr;
@@ -67,6 +69,7 @@ void AEngine::Init()
 	Mix_Music* bgm = Mix_LoadMUS("data/bgm.mp3");
 	Mix_VolumeMusic(1);
 	Mix_PlayMusic(bgm, -1);
+	TTF_Init();
 	IsRunning = true;
 }
 
@@ -80,6 +83,7 @@ void AEngine::Term()
 	SDL_DestroyRenderer(MyRenderer);
 	SDL_DestroyWindow(MyWindow);
 	Mix_CloseAudio();
+	TTF_Quit();
 	SDL_Quit();
 }
 
@@ -173,9 +177,16 @@ void AEngine::DrawMap(std::string MapFileName)
 				SpawnActor(new AFloor(X, Y, ' '));
 				SpawnActor(new AMonster(X, Y,'M'));
 			}
+			else if (Map[X] == 'H')
+			{
+				SpawnActor(new AFloor(X, Y, ' '));
+				SpawnActor(new AHeart(X, Y, 'H'));
+			}
+
 		}
 		++Y;
 	}
+	SpawnActor(new AText);
 	SortLayer();
 	InputFile.close();
 }
