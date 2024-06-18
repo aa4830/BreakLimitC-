@@ -89,6 +89,7 @@ void APlayer::Tick()
 			break;
 		}
 	}
+	Attack();
 }
 
 void APlayer::Render()
@@ -125,6 +126,14 @@ void APlayer::Render()
 	else
 	{
 		SDL_RenderFillRect(AEngine::GetInstance()->MyRenderer, &MyRect);
+	}
+}
+
+void APlayer::Attack()
+{
+	if (X == Monster.GetX() && Y == Monster.GetY())
+	{
+		Monster.SetHp(GetHp() - 1);
 	}
 }
 

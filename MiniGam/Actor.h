@@ -19,9 +19,13 @@ public:
 	int ColorKeyB;
 	int Hp;
 
+	void SetX(int NewX);
+	void SetY(int NewY);
+	void SetHp(int NewHp);
 	inline int GetX() { return X;}
 	inline int GetY() { return Y; }
 	inline int GetCollision() { return Collision; }
+	inline int GetHp() { return Hp; }
 	virtual void Tick();
 	virtual void Render();
 	void LoadTexture(std::string TextureFilename);

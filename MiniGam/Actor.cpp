@@ -44,6 +44,21 @@ AActor::~AActor()
 {
 }
 
+void AActor::SetX(int NewX)
+{
+	X = NewX;
+}
+
+void AActor::SetY(int NewY)
+{
+	Y = NewY;
+}
+
+void AActor::SetHp(int NewHp)
+{
+	Hp = NewHp;
+}
+
 void AActor::Tick()
 {
 

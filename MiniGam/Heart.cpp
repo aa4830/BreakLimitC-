@@ -46,6 +46,17 @@ void AHeart::Render()
 	SrcRect.y = SpriteSizeY * SpirteIndexY;
 	SrcRect.w = SpriteSizeX;
 	SrcRect.h = SpriteSizeY;
+
+	if (Monster.GetHp() == 2)
+	{
+		SpirteIndexX++;
+		SpirteIndexX = SpirteIndexX % 3;
+	}
+	if (Monster.GetHp() == 1)
+	{
+		SpirteIndexX++;
+		SpirteIndexX = SpirteIndexX % 3;
+	}
 	if (MyTexture)
 	{
 		SDL_RenderCopy(AEngine::GetInstance()->MyRenderer,

@@ -1,5 +1,6 @@
 #pragma once
 #include "Actor.h"
+#include "Monster.h"
 class AHeart : public AActor
 {
 public:
@@ -9,5 +10,6 @@ public:
 	int SpirteIndexX;
 	int SpirteIndexY;
 	virtual ~AHeart();
+	AMonster Monster;
 };
 

@@ -186,7 +186,6 @@ void AEngine::DrawMap(std::string MapFileName)
 		}
 		++Y;
 	}
-	SpawnActor(new AText);
 	SortLayer();
 	InputFile.close();
 }
