@@ -10,6 +10,7 @@ AGoal::AGoal()
 	R = 0;
 	G = 0;
 	B = 255;
+	IsMonster = false;
 }
 
 AGoal::AGoal(int NewX, int NewY, char NewShape)
@@ -18,6 +19,7 @@ AGoal::AGoal(int NewX, int NewY, char NewShape)
 	Y = NewY;
 	Shape = NewShape;
 	Collision = false;
+	IsMonster = false;
 	Layer = 4;
 	R = 0;
 	G = 0;

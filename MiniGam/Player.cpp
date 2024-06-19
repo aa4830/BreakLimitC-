@@ -15,9 +15,14 @@ APlayer::APlayer()
 	ColorKeyR = 255;
 	ColorKeyG = 0;
 	ColorKeyB = 255;
+
 	SpirteIndexX = 0;
 	SpirteIndexY = 0;
+
 	ElapsedTime = 0;
+
+	Hp = 6;
+	PlayerDamage = 10;
 }
 
 APlayer::APlayer(int NewX, int NewY,char NewShape)
@@ -42,6 +47,8 @@ APlayer::APlayer(int NewX, int NewY,char NewShape)
 	Filename = "Data/test.bmp";
 	LoadTexture(Filename);
 	ElapsedTime = 0;
+	Hp = 5;
+	PlayerDamage = 10;
 }
 
 APlayer::~APlayer()
@@ -60,6 +67,7 @@ void APlayer::Tick()
 			SpirteIndexY = 2;
 			if (PredictForward(X, Y - 1))
 			{
+				Attack();
 				Y--;
 			}
 			break;
@@ -68,6 +76,7 @@ void APlayer::Tick()
 			SpirteIndexY = 3;
 			if (PredictForward(X, Y + 1))
 			{
+				Attack();
 				Y++;
 			}
 			break;
@@ -76,6 +85,7 @@ void APlayer::Tick()
 			SpirteIndexY = 0;
 			if (PredictForward(X - 1, Y))
 			{
+				Attack();
 				X--;
 			}
 			break;
@@ -84,12 +94,12 @@ void APlayer::Tick()
 			SpirteIndexY = 1;
 			if (PredictForward(X + 1, Y))
 			{
+				Attack();
 				X++;
 			}
 			break;
 		}
 	}
-	Attack();
 }
 
 void APlayer::Render()
@@ -129,14 +139,6 @@ void APlayer::Render()
 	}
 }
 
-void APlayer::Attack()
-{
-	if (X == Monster.GetX() && Y == Monster.GetY())
-	{
-		Monster.SetHp(GetHp() - 1);
-	}
-}
-
 bool APlayer::PredictForward(int NewX, int NewY)
 {
 	for (int i = 0; i < AEngine::GetInstance()->Actors.size(); ++i)
@@ -157,4 +159,20 @@ bool APlayer::PredictForward(int NewX, int NewY)
 		}
 	}
 	return true;
+}
+
+void APlayer::Attack()
+{
+	for (int i = 0; i < AEngine::GetInstance()->Actors.size(); ++i)
+	{
+		if (this == AEngine::GetInstance()->Actors[i])
+		{
+			continue;
+		}
+		if (AEngine::GetInstance()->Actors[i]->GetIsMonster() == true)
+		{
+			AEngine::GetInstance()->Actors[i]->SetHp(AEngine::GetInstance()->Actors[i]->GetHp()- PlayerDamage);
+		}
+		
+	}
 }

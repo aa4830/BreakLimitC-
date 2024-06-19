@@ -10,6 +10,5 @@ public:
 	int SpirteIndexX;
 	int SpirteIndexY;
 	virtual ~AHeart();
-	AMonster Monster;
 };
 

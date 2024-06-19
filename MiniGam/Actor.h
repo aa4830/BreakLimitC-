@@ -17,7 +17,6 @@ public:
 	int ColorKeyR;
 	int ColorKeyG;
 	int ColorKeyB;
-	int Hp;
 
 	void SetX(int NewX);
 	void SetY(int NewY);
@@ -25,6 +24,7 @@ public:
 	inline int GetX() { return X;}
 	inline int GetY() { return Y; }
 	inline int GetCollision() { return Collision; }
+	inline int GetIsMonster() { return IsMonster; }
 	inline int GetHp() { return Hp; }
 	virtual void Tick();
 	virtual void Render();
@@ -39,5 +39,7 @@ protected:
 	int Y;
 	char Shape;
 	bool Collision;
+	bool IsMonster;
+	int Hp;
 };
 

@@ -11,6 +11,7 @@ AHeart::AHeart()
 	B = 255;
 	SpirteIndexX = 0;
 	SpirteIndexY = 0;
+	IsMonster = false;
 }
 
 AHeart::AHeart(int NewX, int NewY, char NewShape)
@@ -25,6 +26,7 @@ AHeart::AHeart(int NewX, int NewY, char NewShape)
 	B = 255;
 	SpirteIndexX = 0;
 	SpirteIndexY = 0;
+	IsMonster = false;
 
 	Filename = "Data/heart.bmp";
 	LoadTexture(Filename);
@@ -46,17 +48,22 @@ void AHeart::Render()
 	SrcRect.y = SpriteSizeY * SpirteIndexY;
 	SrcRect.w = SpriteSizeX;
 	SrcRect.h = SpriteSizeY;
+	for (int i = 0; i < AEngine::GetInstance()->Actors.size(); ++i)
+	{
+		if (this == AEngine::GetInstance()->Actors[i])
+		{
+			continue;
+		}
+		if (AEngine::GetInstance()->Actors[i]->GetIsMonster() == true && AEngine::GetInstance()->Actors[i]->GetHp()==10)
+		{
+			SpirteIndexX++;
+		}
+		if (AEngine::GetInstance()->Actors[i]->GetIsMonster() == true && AEngine::GetInstance()->Actors[i]->GetHp() == 0)
+		{
+			SpirteIndexX++;
+		}
+	}
 
-	if (Monster.GetHp() == 2)
-	{
-		SpirteIndexX++;
-		SpirteIndexX = SpirteIndexX % 3;
-	}
-	if (Monster.GetHp() == 1)
-	{
-		SpirteIndexX++;
-		SpirteIndexX = SpirteIndexX % 3;
-	}
 	if (MyTexture)
 	{
 		SDL_RenderCopy(AEngine::GetInstance()->MyRenderer,

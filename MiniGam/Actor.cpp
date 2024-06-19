@@ -8,6 +8,7 @@ AActor::AActor()
 	Y = 0;
 	Shape = ' ';
 	Collision = false;
+	IsMonster = false;
 	Layer = 0;
 	ColorKeyR = 255;
 	ColorKeyG = 255;

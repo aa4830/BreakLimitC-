@@ -11,12 +11,12 @@ public:
 
 	virtual void Tick() override;
 	virtual void Render() override;
-	void Attack();
 	bool PredictForward(int NewX, int NewY);
+	void Attack();
 
 	int SpirteIndexX;
 	int SpirteIndexY;
+	int PlayerDamage;
 	Uint64 ElapsedTime;
-	AMonster Monster;
 };
 

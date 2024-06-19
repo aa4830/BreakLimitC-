@@ -10,6 +10,7 @@ AFloor::AFloor()
 	R = 100;
 	G = 100;
 	B = 100;
+	IsMonster = false;
 }
 
 AFloor::AFloor(int NewX, int NewY, char NewShape)
@@ -19,6 +20,7 @@ AFloor::AFloor(int NewX, int NewY, char NewShape)
 	Shape = NewShape;
 	Collision = false;
 	Layer = 0;
+	IsMonster = false;
 
 	R = 100;
 	G = 100;

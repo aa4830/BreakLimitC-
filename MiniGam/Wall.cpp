@@ -6,6 +6,7 @@ AWall::AWall()
 	Y = 0;
 	Shape = '*';
 	Collision = true;
+	IsMonster = false;
 	Layer = 1;
 
 	R = 255;
@@ -19,6 +20,7 @@ AWall::AWall(int NewX, int NewY, char NewShape)
 	Y = NewY;
 	Shape = NewShape;
 	Collision = true;
+	IsMonster = false;
 	Layer = 1;
 
 	R = 255;

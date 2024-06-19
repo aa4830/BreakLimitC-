@@ -7,8 +7,9 @@ AMonster::AMonster()
 	Y = 0;
 	Shape = 'M';
 	Collision = false;
+	IsMonster = true;
 	Layer = 1;
-	Hp = 3;
+	Hp = 20;
 	R = 255;
 	G = 0;
 	B = 255;
@@ -21,8 +22,9 @@ AMonster::AMonster(int NewX, int NewY, char NewShape)
 	Y = NewY;
 	Shape = NewShape;
 	Collision = false;
+	IsMonster = true;
 	Layer = 1;
-	Hp = 3;
+	Hp = 20;
 	R = 255;
 	G = 0;
 	B = 255;
