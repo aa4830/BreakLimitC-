@@ -28,6 +28,7 @@ AActor::AActor(int NewX, int NewY,char NewShape, int NewLayer)
 	Y = NewY;
 	Shape = NewShape;
 	Collision = false;
+	IsMonster = false;
 	Layer = NewLayer;
 	ColorKeyR = 255;
 	ColorKeyG = 255;

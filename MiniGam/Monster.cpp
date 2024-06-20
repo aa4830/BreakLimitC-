@@ -9,7 +9,7 @@ AMonster::AMonster()
 	Collision = false;
 	IsMonster = true;
 	Layer = 1;
-	Hp = 20;
+	Hp = 30;
 	R = 255;
 	G = 0;
 	B = 255;
@@ -24,7 +24,7 @@ AMonster::AMonster(int NewX, int NewY, char NewShape)
 	Collision = false;
 	IsMonster = true;
 	Layer = 1;
-	Hp = 20;
+	Hp = 30;
 	R = 255;
 	G = 0;
 	B = 255;
@@ -58,6 +58,14 @@ bool AMonster::PredictForward(int NewX, int NewY)
 		}
 	}
 	return true;
+}
+
+void AMonster::Die()
+{
+	if (GetHp() == 0)
+	{
+		delete AEngine::GetInstance()->Actors[i]
+	}
 }
 
 void AMonster::Tick()

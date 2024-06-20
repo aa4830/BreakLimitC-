@@ -7,6 +7,7 @@ APlayer::APlayer()
 	Y = 0;
 	Shape = 'P';
 	Collision = true;
+	IsMonster = false;
 	Layer = 5;
 	R = 0;
 	G = 255;
@@ -31,6 +32,7 @@ APlayer::APlayer(int NewX, int NewY,char NewShape)
 	Y = NewY;
 	Shape = NewShape;
 	Collision = true;
+	IsMonster = false;
 	Layer = 5;
 
 	R = 0;
@@ -63,41 +65,41 @@ void APlayer::Tick()
 		switch (AEngine::GetInstance()->MyEvent.key.keysym.sym)
 		{
 		case SDLK_w:
-		case SDLK_UP:
 			SpirteIndexY = 2;
 			if (PredictForward(X, Y - 1))
 			{
-				Attack();
 				Y--;
 			}
 			break;
 		case SDLK_s:
-		case SDLK_DOWN:
 			SpirteIndexY = 3;
 			if (PredictForward(X, Y + 1))
 			{
-				Attack();
 				Y++;
 			}
 			break;
 		case SDLK_a:
-		case SDLK_LEFT:
 			SpirteIndexY = 0;
 			if (PredictForward(X - 1, Y))
 			{
-				Attack();
 				X--;
 			}
 			break;
 		case SDLK_d:
-		case SDLK_RIGHT:
 			SpirteIndexY = 1;
 			if (PredictForward(X + 1, Y))
 			{
-				Attack();
 				X++;
 			}
 			break;
+		case SDLK_LSHIFT:
+			SpirteIndexY = 4;
+			Attack(X, Y - 1);
+			Attack(X, Y + 1);
+			Attack(X - 1, Y);
+			Attack(X + 1, Y);
+			Attack(X , Y);
+
 		}
 	}
 }
@@ -161,7 +163,7 @@ bool APlayer::PredictForward(int NewX, int NewY)
 	return true;
 }
 
-void APlayer::Attack()
+void APlayer::Attack(int NewX, int NewY)
 {
 	for (int i = 0; i < AEngine::GetInstance()->Actors.size(); ++i)
 	{
@@ -169,10 +171,12 @@ void APlayer::Attack()
 		{
 			continue;
 		}
-		if (AEngine::GetInstance()->Actors[i]->GetIsMonster() == true)
+		if (AEngine::GetInstance()->Actors[i]->GetIsMonster())
 		{
-			AEngine::GetInstance()->Actors[i]->SetHp(AEngine::GetInstance()->Actors[i]->GetHp()- PlayerDamage);
+			if (AEngine::GetInstance()->Actors[i]->GetX() == NewX && AEngine::GetInstance()->Actors[i]->GetY() == NewY)
+			{
+				AEngine::GetInstance()->Actors[i]->SetHp(AEngine::GetInstance()->Actors[i]->GetHp() - PlayerDamage);
+			}
 		}
-		
 	}
 }

@@ -12,7 +12,7 @@ public:
 	virtual void Tick() override;
 	virtual void Render() override;
 	bool PredictForward(int NewX, int NewY);
-	void Attack();
+	void Attack(int NewX, int NewY);
 
 	int SpirteIndexX;
 	int SpirteIndexY;

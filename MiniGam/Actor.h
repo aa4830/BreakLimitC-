@@ -40,6 +40,6 @@ protected:
 	char Shape;
 	bool Collision;
 	bool IsMonster;
-	int Hp;
+	unsigned int Hp;
 };
 

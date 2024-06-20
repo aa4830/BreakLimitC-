@@ -9,6 +9,7 @@ public:
 	virtual void Render() override;
 	int SpirteIndexX;
 	int SpirteIndexY;
+	bool Stop;
 	virtual ~AHeart();
 };
 

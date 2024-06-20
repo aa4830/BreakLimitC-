@@ -12,6 +12,7 @@ AHeart::AHeart()
 	SpirteIndexX = 0;
 	SpirteIndexY = 0;
 	IsMonster = false;
+	Stop = true;
 }
 
 AHeart::AHeart(int NewX, int NewY, char NewShape)
@@ -27,6 +28,7 @@ AHeart::AHeart(int NewX, int NewY, char NewShape)
 	SpirteIndexX = 0;
 	SpirteIndexY = 0;
 	IsMonster = false;
+	Stop = true;
 
 	Filename = "Data/heart.bmp";
 	LoadTexture(Filename);
@@ -50,18 +52,25 @@ void AHeart::Render()
 	SrcRect.h = SpriteSizeY;
 	for (int i = 0; i < AEngine::GetInstance()->Actors.size(); ++i)
 	{
-		if (this == AEngine::GetInstance()->Actors[i])
-		{
-			continue;
-		}
-		if (AEngine::GetInstance()->Actors[i]->GetIsMonster() == true && AEngine::GetInstance()->Actors[i]->GetHp()==10)
-		{
-			SpirteIndexX++;
-		}
-		if (AEngine::GetInstance()->Actors[i]->GetIsMonster() == true && AEngine::GetInstance()->Actors[i]->GetHp() == 0)
-		{
-			SpirteIndexX++;
-		}
+
+			if (this == AEngine::GetInstance()->Actors[i])
+			{
+				continue;
+			}
+			if (AEngine::GetInstance()->Actors[i]->GetIsMonster() == true && (AEngine::GetInstance()->Actors[i]->GetHp() == 20))
+			{
+				SpirteIndexX++;
+				SpirteIndexX = SpirteIndexX % 3;
+			}
+			if (AEngine::GetInstance()->Actors[i]->GetIsMonster() == true && (AEngine::GetInstance()->Actors[i]->GetHp() == 10))
+			{
+				if(Stop)
+				{
+					SpirteIndexX++;
+					SpirteIndexX = SpirteIndexX % 3;
+					Stop = false;
+				}
+			}
 	}
 
 	if (MyTexture)
