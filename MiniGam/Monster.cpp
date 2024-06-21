@@ -62,9 +62,17 @@ bool AMonster::PredictForward(int NewX, int NewY)
 
 void AMonster::Die()
 {
+	for (int i = 0; i < AEngine::GetInstance()->Actors[i].size(); ++i)
+	{
+		if(AEngine::GetInstance()->Actors[i] == int indexToDelete)
+	}
 	if (GetHp() == 0)
 	{
-		delete AEngine::GetInstance()->Actors[i]
+		if (indexToDelete >= 0 && indexToDelete < AEngine::GetInstance()->Actors[i].size()) 
+		{
+			delete Actors[indexToDelete]; // 해당 포인터 메모리 해제
+			actors.erase(actors.begin() + indexToDelete); // 벡터에서 요소 삭제
+		}
 	}
 }
 
